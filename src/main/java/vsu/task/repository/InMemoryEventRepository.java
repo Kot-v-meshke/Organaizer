@@ -1,4 +1,4 @@
-package vsu.task.storage;
+package vsu.task.repository;
 
 import vsu.task.domain.Event;
 
@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class InMemoryEventStorage implements EventStorage {
+public class InMemoryEventRepository implements EventRepository {
     
     private final Map<Long, Event> eventsById = new HashMap<>();
 
