@@ -10,7 +10,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
-public class EditEventCommand implements Command{
+public class EditEventCommand implements Command {
 
     private Scanner scanner;
     private EventService eventService;

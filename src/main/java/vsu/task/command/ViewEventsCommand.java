@@ -41,7 +41,9 @@ public class ViewEventsCommand implements Command {
         } else {
             events.sort((e1, e2) -> e1.getDate().compareTo(e2.getDate()));
             for (Event e : events) {
+                System.out.println("Дата события: " + e.getDate());
                 System.out.println("ID: " + e.getId() + " | " + e.getDetails());
+                System.out.println("Описание: " + e.getDescription());
                 System.out.println("-------------------------");
             }
         }

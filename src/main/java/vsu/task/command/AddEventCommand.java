@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.util.Scanner;
 
 import static vsu.task.util.InputHelper.readDate;
+import static vsu.task.util.InputHelper.readInt;
 
 public class AddEventCommand implements Command {
 
@@ -21,29 +22,33 @@ public class AddEventCommand implements Command {
     @Override
     public void execute() {
         System.out.println("\n--- Добавление события ---");
-        System.out.println("1. День рождения");
-        System.out.println("2. Важная встреча");
-        System.out.print("Тип события: ");
-        String typeChoice = scanner.nextLine();
-        LocalDate date = readDate(scanner,"Введите дату (дд.мм.гггг): ");
-        System.out.print("Описание: ");
-        String desc = scanner.nextLine();
 
         EventType type = null;
-        String extra;
+        String extra = null;
 
-        if ("1".equals(typeChoice)) {
-            type = EventType.BIRTHDAY;
-            System.out.print("Имя именинника: ");
-            extra = scanner.nextLine();
-        } else if ("2".equals(typeChoice)) {
-            type = EventType.MEETING;
-            System.out.print("Место встречи: ");
-            extra = scanner.nextLine();
-        } else {
-            System.out.println("Неверный тип события.");
-            return;
+        boolean trueFormat = false;
+        while (!trueFormat) {
+            System.out.println("1. День рождения");
+            System.out.println("2. Важная встреча");
+            String typeChoice = String.valueOf(readInt(scanner, "Тип события: "));
+            if (EventType.BIRTHDAY.getMenuCode().equals(typeChoice)) {
+                type = EventType.BIRTHDAY;
+                System.out.print("Имя именинника: ");
+                extra = scanner.nextLine();
+                trueFormat = true;
+            } else if (EventType.MEETING.getMenuCode().equals(typeChoice)) {
+                type = EventType.MEETING;
+                System.out.print("Место встречи: ");
+                extra = scanner.nextLine();
+                trueFormat = true;
+            } else {
+                System.out.println("Неверный тип события.");
+            }
         }
+
+        LocalDate date = readDate(scanner, "Введите дату (дд.мм.гггг): ");
+        System.out.print("Описание: ");
+        String desc = scanner.nextLine();
 
         eventService.addEvent(type, date, desc, extra);
         System.out.println("Событие успешно добавлено!");

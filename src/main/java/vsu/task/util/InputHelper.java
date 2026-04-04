@@ -10,26 +10,54 @@ public class InputHelper {
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
     public static LocalDate readDate(Scanner scanner, String prompt) {
-        while (true) {
+        LocalDate result = LocalDate.now();
+        boolean valid = false;
+
+        while (!valid) {
             System.out.print(prompt);
             String input = scanner.nextLine();
             try {
-                return LocalDate.parse(input, FORMATTER);
+                result = LocalDate.parse(input, FORMATTER);
+                valid = true;
             } catch (DateTimeParseException e) {
                 System.out.println("Ошибка: неверный формат. Используйте дд.мм.гггг");
             }
         }
+
+        return result;
     }
 
     public static long readLong(Scanner scanner, String prompt) {
-        while (true) {
+        long result = 0;
+        boolean valid = false;
+
+        while (!valid) {
             System.out.print(prompt);
             String input = scanner.nextLine();
             try {
-                return Long.parseLong(input);
+                result = Long.parseLong(input);
+                valid = true;
             } catch (NumberFormatException e) {
                 System.out.println("Ошибка: введите число");
             }
         }
+        return result;
+    }
+
+    public static int readInt(Scanner scanner, String prompt) {
+        int result = 0;
+        boolean valid = false;
+
+        while (!valid) {
+            System.out.print(prompt);
+            String input = scanner.nextLine();
+            try {
+                result = Integer.parseInt(input);
+                valid = true;
+            } catch (NumberFormatException e) {
+                System.out.println("Ошибка: введите число");
+            }
+        }
+        return result;
     }
 }

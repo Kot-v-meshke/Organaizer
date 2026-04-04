@@ -3,7 +3,10 @@ package vsu.task.repository;
 import vsu.task.domain.Event;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class InMemoryEventRepository implements EventRepository {

@@ -4,7 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CommandInvoker {
+
     private final Map<String, Command> commands = new HashMap<>();
+
+    public CommandInvoker() {
+    }
 
     public void registerCommand(String key, Command command) {
         commands.put(key, command);
@@ -28,4 +32,5 @@ public class CommandInvoker {
         }
         System.out.println("0. Выход");
     }
+
 }

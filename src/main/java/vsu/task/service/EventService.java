@@ -20,9 +20,9 @@ public class EventService {
     public void addEvent(EventType type, LocalDate date, String description, String extraData) {
         Event event;
         if (type == EventType.BIRTHDAY) {
-            event = new Birthday(date, description, extraData); // extraData-имя, так можно? читаемо?
+            event = new Birthday(date, description, extraData);
         } else {
-            event = new Meeting(date, description, extraData); // extraData- место
+            event = new Meeting(date, description, extraData);
         }
         eventRepository.addEvent(event);
     }
