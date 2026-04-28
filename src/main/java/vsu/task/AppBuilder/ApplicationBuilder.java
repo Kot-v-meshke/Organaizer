@@ -5,6 +5,7 @@ import vsu.task.command.factory.CommandFactory;
 import vsu.task.command.factory.ConsoleCommandFactory;
 import vsu.task.repository.EventRepository;
 import vsu.task.repository.InMemoryEventRepository;
+import vsu.task.repository.JdbcEventRepository;
 import vsu.task.service.EventService;
 
 import java.util.Scanner;
@@ -35,7 +36,7 @@ public class ApplicationBuilder {
             scanner = new Scanner(System.in);
         }
         if (eventRepository == null) {
-            eventRepository = new InMemoryEventRepository();
+            eventRepository = new JdbcEventRepository();
         }
         if (eventService == null) {
             eventService = new EventService(eventRepository);
