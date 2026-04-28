@@ -1,10 +1,8 @@
 package vsu.task.command.factory;
 
 import vsu.task.command.Command;
+import vsu.task.command.CommandType;
 
 public interface CommandFactory {
-    Command createAddCommand();
-    Command createViewCommand();
-    Command createEditCommand();
-    Command createDeleteCommand();
+    Command createCommand(CommandType type);
 }

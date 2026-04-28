@@ -1,6 +1,6 @@
 package vsu.task.AppBuilder;
 
-import vsu.task.command.*;
+import vsu.task.command.CommandInvoker;
 import vsu.task.command.factory.CommandFactory;
 import vsu.task.command.factory.ConsoleCommandFactory;
 import vsu.task.repository.EventRepository;
@@ -44,20 +44,11 @@ public class ApplicationBuilder {
             factory = new ConsoleCommandFactory(scanner, eventService);
         }
 
-        CommandInvoker invoker = new CommandInvoker();
-        registerCommands(invoker);
+        CommandInvoker invoker = new CommandInvoker(factory);
 
         return new Application(scanner, invoker);
     }
 
-    private void registerCommands(CommandInvoker invoker) {
-        invoker.registerCommand(CommandType.ADDEVENTCOMMAND.getMenuCode(),
-                factory.createAddCommand());
-        invoker.registerCommand(CommandType.EDITEVENTCOMMAND.getMenuCode(),
-                factory.createEditCommand());
-        invoker.registerCommand(CommandType.VIEWEVENTCOMMAND.getMenuCode(),
-                factory.createViewCommand());
-        invoker.registerCommand(CommandType.DELETEEVENTCOMMAND.getMenuCode(),
-                factory.createDeleteCommand());
-    }
+
+
 }

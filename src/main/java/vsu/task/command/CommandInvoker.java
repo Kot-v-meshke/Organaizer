@@ -1,21 +1,28 @@
 package vsu.task.command;
 
+import vsu.task.command.factory.CommandFactory;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class CommandInvoker {
 
     private final Map<String, Command> commands = new HashMap<>();
+    private final CommandFactory factory;
 
-    public CommandInvoker() {
+    public CommandInvoker(CommandFactory factory) {
+        this.factory = factory;
+        registerAllCommands();
     }
 
-    public void registerCommand(String key, Command command) {
-        commands.put(key, command);
+    private void registerAllCommands() {
+        for (CommandType type : CommandType.values()) {
+            commands.put(type.getMenuCode(), factory.createCommand(type));
+        }
     }
 
-    public void executeCommand(String key) {
-        Command command = commands.get(key);
+    public void executeCommand(String code) {
+        Command command = commands.get(code);
         if (command != null) {
             command.execute();
         } else {
@@ -25,12 +32,9 @@ public class CommandInvoker {
 
     public void printMenu() {
         System.out.println("\n--- Меню ---");
-        for (Map.Entry<String, Command> entry : commands.entrySet()) {
-            if (!"0".equals(entry.getKey())) {
-                System.out.println(entry.getKey() + ". " + entry.getValue().getDescription());
-            }
+        for (CommandType type : CommandType.values()) {
+            System.out.println(type.getMenuCode() + ". " + type.getDescription());
         }
-        System.out.println("0. Выход");
     }
 
 }

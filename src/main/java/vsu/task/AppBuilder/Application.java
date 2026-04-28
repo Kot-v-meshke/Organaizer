@@ -1,6 +1,7 @@
 package vsu.task.AppBuilder;
 
 import vsu.task.command.CommandInvoker;
+import vsu.task.command.CommandType;
 
 import java.util.Scanner;
 
@@ -19,11 +20,14 @@ public class Application {
             invoker.printMenu();
             System.out.print("Выберите действие: ");
             String choice = scanner.nextLine();
+            CommandType type = CommandType.fromCode(choice);
 
-            if ("0".equals(choice)) {
+            if (type == CommandType.EXIT_COMMAND) {
                 running = false;
-            } else {
+            } else if (type != null) {
                 invoker.executeCommand(choice);
+            } else {
+                System.out.println("Неверная команда.");
             }
         }
     }

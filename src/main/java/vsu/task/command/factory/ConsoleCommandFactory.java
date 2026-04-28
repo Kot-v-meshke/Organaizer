@@ -2,12 +2,15 @@ package vsu.task.command.factory;
 
 import vsu.task.command.AddEventCommand;
 import vsu.task.command.Command;
+import vsu.task.command.CommandType;
 import vsu.task.command.EditEventCommand;
+import vsu.task.command.ExitCommand;
 import vsu.task.command.ViewEventsCommand;
 import vsu.task.command.DeleteEventCommand;
 import vsu.task.service.EventService;
 
 import java.util.Scanner;
+
 
 public class ConsoleCommandFactory implements CommandFactory {
     private final Scanner scanner;
@@ -19,23 +22,14 @@ public class ConsoleCommandFactory implements CommandFactory {
     }
 
     @Override
-    public Command createAddCommand() {
-        return new AddEventCommand(scanner, service);
-    }
-
-    @Override
-    public Command createViewCommand() {
-        return new ViewEventsCommand(scanner, service);
-    }
-
-    @Override
-    public Command createEditCommand() {
-        return new EditEventCommand(scanner, service);
-    }
-
-    @Override
-    public Command createDeleteCommand() {
-        return new DeleteEventCommand(scanner, service);
+    public Command createCommand(CommandType type) {
+        return switch (type) {
+            case ADD_EVENT_COMMAND -> new AddEventCommand(scanner, service);
+            case VIEW_EVENT_COMMAND -> new ViewEventsCommand(scanner, service);
+            case EDIT_EVENT_COMMAND -> new EditEventCommand(scanner, service);
+            case DELETE_EVENT_COMMAND -> new DeleteEventCommand(scanner, service);
+            case EXIT_COMMAND -> new ExitCommand();
+        };
     }
 }
 
