@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS events (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    type VARCHAR(50) NOT NULL,
+    date DATE NOT NULL,
+    description VARCHAR(255),
+    extra_data VARCHAR(255)
+);

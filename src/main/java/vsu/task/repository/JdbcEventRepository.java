@@ -6,7 +6,11 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import vsu.task.domain.*;
+import vsu.task.config.DatabaseMigrator;
+import vsu.task.domain.Birthday;
+import vsu.task.domain.Event;
+import vsu.task.domain.Meeting;
+import vsu.task.domain.EventType;
 import vsu.task.config.DatabaseConfig;
 import vsu.task.exeption.EventNotFoundException;
 import vsu.task.exeption.EventRepositoryException;
@@ -23,33 +27,9 @@ public class JdbcEventRepository implements EventRepository {
     private final JdbcTemplate jdbcTemplate;
 
     public JdbcEventRepository() {
-        try {
-            this.jdbcTemplate = new DatabaseConfig().jdbcTemplate();
-            initDatabase();
-        } catch (DataAccessException e) {
-            logger.severe("Не удалось инициализировать репозиторий: " + e.getMessage());
-            throw new EventRepositoryException("Ошибка инициализации базы данных", e);
-        }
-    }
-
-    private void initDatabase() {
-        String sql = """
-        CREATE TABLE IF NOT EXISTS events (
-            id BIGINT PRIMARY KEY AUTO_INCREMENT,
-            type VARCHAR(50) NOT NULL,
-            date DATE NOT NULL,
-            description VARCHAR(255),
-            extra_data VARCHAR(255)
-        )
-        """;
-
-        try {
-            jdbcTemplate.execute(sql);
-            logger.info("База данных успешно инициализирована");
-        } catch (DataAccessException e) {
-            logger.warning("Ошибка при инициализации таблицы: " + e.getMessage());
-            throw new EventRepositoryException("Не удалось создать таблицу events", e);
-        }
+        DatabaseConfig config = new DatabaseConfig();
+        this.jdbcTemplate = config.jdbcTemplate();
+        new DatabaseMigrator(jdbcTemplate).migrate();
     }
 
     @Override
