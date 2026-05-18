@@ -38,3 +38,6 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+organizer_db.mv.db
+organizer_db.trace.db
